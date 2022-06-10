@@ -1,0 +1,12 @@
+artifacts/
+bin/
+build/
+cache/
+deployments/hardhat/
+node_modules/
+typechain/
+
+.DS_Store
+
+.env
+.secret

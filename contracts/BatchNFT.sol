@@ -8,7 +8,15 @@ contract BatchNFT is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     // tokenIdIndex starts from 1
     Counters.Counter private tokenIdIndex;
+    mapping (address => bool) public whiteListAddress;
 
+    modifier onlyWhiteListAddress {
+        require(whiteListAddress[msg.sender], "msg.sender is not white list address");
+        _;
+    }
+
+    event whiteListAddressAdded(address _address);
+    event whiteListAddressRemoved(address _address);
 
     constructor() ERC721("batch", "batch") {}
     
@@ -16,7 +24,7 @@ contract BatchNFT is ERC721URIStorage, Ownable {
         address minter,
         address[] memory receivers,
         string memory tokenURI
-    ) external onlyOwner {
+    ) external onlyWhiteListAddress {
         for (uint32 i = 0; i < receivers.length; i++) {
             uint256 tokenId = incTokenId();
             _safeMint(minter, tokenId);
@@ -28,5 +36,17 @@ contract BatchNFT is ERC721URIStorage, Ownable {
     function incTokenId() private returns (uint256) {
         tokenIdIndex.increment();
         return tokenIdIndex.current();
+    }
+
+    function addWhiteListAddress(address _address) public onlyOwner {
+        require(!whiteListAddress[_address], "address is white list address");
+        whiteListAddress[_address] = true;
+        emit whiteListAddressAdded(_address);
+    }
+
+    function removeWhiteListAddress(address _address) public onlyOwner {
+        require(whiteListAddress[_address], "address is not white list address");
+        whiteListAddress[_address] = false;
+        emit whiteListAddressRemoved(_address);
     }
 }

@@ -16,8 +16,12 @@ describe('Batch NFT Tests', function() {
         await batchNFT.deployed();
         console.log(batchNFT.address);
 
-        await batchNFT.connect(owner).batchMintAndTransfer(
-            addr1.address,
+        await batchNFT.connect(owner).addWhiteListAddress(
+            addr1.address
+        );
+
+        await batchNFT.connect(addr1).batchMintAndTransfer(
+            addr2.address,
             receivers,
             "https.xxx.yyy.com",
         );
