@@ -41,11 +41,8 @@
         "web3": "^1.7.3"
     },
     "dependencies": {
+        "@truffle/hdwallet-provider": "^2.0.9",
         "dotenv": "^16.0.0",
-<<<<<<< HEAD
         "eslint-cli": "^1.1.1"
-=======
-        "web3": "^1.7.3"
->>>>>>> 283a10de37c170ad157a2198e0889ba669e92c08
     }
 }
