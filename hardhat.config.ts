@@ -1,3 +1,4 @@
+/* eslint-disable */
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-etherscan';
 import '@nomiclabs/hardhat-waffle';
@@ -18,6 +19,10 @@ const config: HardhatUserConfig = {
     networks: {
         hardhat: {},
         localhost: { timeout: 600000 },
+        polygon: {
+            url: process.env.API_URL,
+            accounts: [process.env.PRIVATE_KEY!],
+        },
     },
     solidity: {
         version: '0.8.9',

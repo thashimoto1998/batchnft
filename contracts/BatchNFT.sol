@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.8.9;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -8,10 +9,13 @@ contract BatchNFT is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     // tokenIdIndex starts from 1
     Counters.Counter private tokenIdIndex;
-    mapping (address => bool) public whiteListAddress;
+    mapping(address => bool) public whiteListAddress;
 
-    modifier onlyWhiteListAddress {
-        require(whiteListAddress[msg.sender], "msg.sender is not white list address");
+    modifier onlyWhiteListAddress() {
+        require(
+            whiteListAddress[msg.sender],
+            "msg.sender is not white list address"
+        );
         _;
     }
 
@@ -19,7 +23,7 @@ contract BatchNFT is ERC721URIStorage, Ownable {
     event whiteListAddressRemoved(address _address);
 
     constructor() ERC721("batch", "batch") {}
-    
+
     function batchMintAndTransfer(
         address minter,
         address[] memory receivers,
@@ -45,7 +49,10 @@ contract BatchNFT is ERC721URIStorage, Ownable {
     }
 
     function removeWhiteListAddress(address _address) public onlyOwner {
-        require(whiteListAddress[_address], "address is not white list address");
+        require(
+            whiteListAddress[_address],
+            "address is not white list address"
+        );
         whiteListAddress[_address] = false;
         emit whiteListAddressRemoved(_address);
     }
